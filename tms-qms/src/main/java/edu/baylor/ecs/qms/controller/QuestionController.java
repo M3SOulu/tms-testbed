@@ -2,9 +2,9 @@ package edu.baylor.ecs.qms.controller;
 
 import edu.baylor.ecs.qms.Exception.InstanceCreatingException;
 import edu.baylor.ecs.qms.Exception.ResourceNotFoundException;
-import baylor.csi.questionManagement.model.*;
+import edu.baylor.ecs.qms.model.*;
 import edu.baylor.ecs.qms.model.dto.QuestionDto;
-import baylor.csi.questionManagement.repository.*;
+import edu.baylor.ecs.qms.repository.*;
 import edu.baylor.ecs.qms.model.*;
 import edu.baylor.ecs.qms.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
