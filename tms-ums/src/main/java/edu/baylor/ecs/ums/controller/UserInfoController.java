@@ -3,6 +3,7 @@ package edu.baylor.ecs.ums.controller;
 import edu.baylor.ecs.ums.entity.Role;
 import edu.baylor.ecs.ums.entity.User;
 import edu.baylor.ecs.ums.service.UserAccessService;
+import org.jboss.resteasy.annotations.ResponseObject;
 import org.keycloak.KeycloakPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import javax.annotation.security.RolesAllowed;
 import java.util.stream.Collectors;
 
 /**
@@ -31,13 +33,15 @@ public class UserInfoController {
     private UserAccessService userAccessService;
 
     @GetMapping(path = "/users")
-    @PreAuthorize("hasAnyAuthority(ROLE_admin', 'ROLE_superadmin')")
+    //@PreAuthorize("hasAnyAuthority(ROLE_admin', 'ROLE_superadmin')")
+    @RolesAllowed({"ROLE_admin","ROLE_superadmin"})
     public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok(userAccessService.getUsers());
     }
 
     @GetMapping(path = "/usernames")
-    @PreAuthorize("hasAnyAuthority('ROLE_admin', 'ROLE_superadmin')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_admin', 'ROLE_superadmin')")
+    @RolesAllowed({"ROLE_admin", "ROLE_superadmin"})
     public ResponseEntity<List<String>> getAllUsernames() {
         return ResponseEntity.ok(userAccessService.getUsers()
                 .stream()
@@ -46,13 +50,15 @@ public class UserInfoController {
     }
 
     @GetMapping(path = "/userRoles/{username}")
-    @PreAuthorize("hasAnyAuthority('ROLE_user', 'ROLE_admin', 'ROLE_superadmin')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_user', 'ROLE_admin', 'ROLE_superadmin')")
+    @RolesAllowed({"ROLE_user","ROLE_admin","ROLE_superadmin"})
     public ResponseEntity<List<String>> getUserRoles(@PathVariable String username) {
         return ResponseEntity.ok(userAccessService.getUserRoleNames(username));
     }
 
     @GetMapping(path = "/validId/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_user', 'ROLE_admin', 'ROLE_superadmin')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_user', 'ROLE_admin', 'ROLE_superadmin')")
+    @RolesAllowed({"ROLE_user","ROLE_admin","ROLE_superadmin"})
     public ResponseEntity<Boolean> isValidId(@PathVariable String id) {
         return ResponseEntity.ok(userAccessService.getUsers()
                 .stream()
@@ -60,7 +66,8 @@ public class UserInfoController {
     }
 
     @GetMapping(path = "/emailInUse/{email}")
-    @PreAuthorize("hasAnyAuthority('ROLE_user', 'ROLE_admin', 'ROLE_superadmin')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_user', 'ROLE_admin', 'ROLE_superadmin')")
+    @RolesAllowed({"ROLE_user","ROLE_admin","ROLE_superadmin"})
     public ResponseEntity<String> isEmailInUse(@PathVariable String email) {
         List<User> users = userAccessService.getUsers();
         return ResponseEntity.ok(users
@@ -70,7 +77,8 @@ public class UserInfoController {
     }
 
     @GetMapping(path = "/userById/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_user', 'ROLE_admin', 'ROLE_superadmin')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_user', 'ROLE_admin', 'ROLE_superadmin')")
+    @RolesAllowed({"ROLE_user","ROLE_admin","ROLE_superadmin"})
     public ResponseEntity<User> getUserById(@PathVariable String id) {
         List<User> users = userAccessService.getUsers();
         return ResponseEntity.ok(users
@@ -80,7 +88,8 @@ public class UserInfoController {
     }
 
     @GetMapping(path = "/userByUsername/{username}")
-    @PreAuthorize("hasAnyAuthority('ROLE_user', 'ROLE_admin', 'ROLE_superadmin')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_user', 'ROLE_admin', 'ROLE_superadmin')")
+    @RolesAllowed({"ROLE_user","ROLE_admin","ROLE_superadmin"})
     public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication auth = context.getAuthentication();
@@ -92,19 +101,22 @@ public class UserInfoController {
     }
 
     @PostMapping(path = "/addUser")
-    @PreAuthorize("hasAnyAuthority('ROLE_admin', 'ROLE_superadmin')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_admin', 'ROLE_superadmin')")
+    @RolesAllowed({"ROLE_admin","ROLE_superadmin"})
     public ResponseEntity<User> addNewUser(@RequestBody User user) {
         return ResponseEntity.ok(userAccessService.addNewUser(user));
     }
 
     @PostMapping(path = "/addUserRoles/{username}")
-    @PreAuthorize("hasAnyAuthority('ROLE_admin', 'ROLE_superadmin')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_admin', 'ROLE_superadmin')")
+    @RolesAllowed({"ROLE_admin","ROLE_superadmin"})
     public ResponseEntity<List<Role>> addUserRoles(@PathVariable String username, @RequestBody Role[] roles) {
         return ResponseEntity.ok(userAccessService.addUserRoles(username, roles));
     }
 
     @PutMapping(path = "/updateUser")
-    @PreAuthorize("hasAnyAuthority('ROLE_user', 'ROLE_admin', 'ROLE_superadmin')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_user', 'ROLE_admin', 'ROLE_superadmin')")
+    @RolesAllowed({"ROLE_user","ROLE_admin","ROLE_superadmin"})
     public ResponseEntity<String> updateUser(@RequestBody User user) {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication auth = context.getAuthentication();
@@ -123,7 +135,8 @@ public class UserInfoController {
     }
 
     @PutMapping(path = "/changePassword/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_user', 'ROLE_admin', 'ROLE_superadmin')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_user', 'ROLE_admin', 'ROLE_superadmin')")
+    @RolesAllowed({"ROLE_user","ROLE_admin","ROLE_superadmin"})
     public ResponseEntity<String> changePassword(@PathVariable String id, @RequestBody String newPassword) {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication auth = context.getAuthentication();
@@ -151,7 +164,8 @@ public class UserInfoController {
     }
 
     @DeleteMapping(path = "/deleteUser/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_admin', 'ROLE_superadmin')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_admin', 'ROLE_superadmin')")
+    @RolesAllowed({"ROLE_admin","ROLE_superadmin"})
     public ResponseEntity<String> removeUser(@PathVariable String id) {
         if (userAccessService.getUsers().stream().noneMatch(x -> id.equals(x.getId()))) {
             return ResponseEntity.status(404).body("No user with that id");
@@ -161,7 +175,8 @@ public class UserInfoController {
     }
 
     @DeleteMapping(path = "/deleteUserByUsername/{username}")
-    @PreAuthorize("hasAnyAuthority('ROLE_admin', 'ROLE_superadmin')")
+    //@PreAuthorize("hasAnyAuthority('ROLE_admin', 'ROLE_superadmin')")
+    @RolesAllowed({"ROLE_admin","ROLE_superadmin"})
     public ResponseEntity<String> removeUserByUsername(@PathVariable String username) {
         String id = userAccessService.getUsers()
                 .stream()
