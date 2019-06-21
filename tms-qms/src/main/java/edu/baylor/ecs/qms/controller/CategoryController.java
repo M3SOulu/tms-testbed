@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -22,24 +23,28 @@ public class CategoryController {
 
     @CrossOrigin
     @GetMapping("")
+    @RolesAllowed({"moderator","admin","superadmin"})
     public List<Category> findAllCategories() {
         return categoryRepository.findAll();
     }
 
     @CrossOrigin
     @GetMapping("/{cateogryId}")
+    @RolesAllowed({"moderator","admin","superadmin"})
     public Category findCategoriesById(@PathVariable Long cateogryId) {
         return categoryRepository.findById(cateogryId).orElse(null);
     }
 
     @CrossOrigin
     @PostMapping("")
+    @RolesAllowed({"admin","superadmin"})
     public Category createCategory(@Valid @RequestBody Category category) {
         return categoryRepository.save(category);
     }
 
     @CrossOrigin
     @PutMapping("/{cateogryId}")
+    @RolesAllowed({"moderator","admin","superadmin"})
     public Category updateCategory(@PathVariable Long cateogryId, @Valid @RequestBody Category categoryRequest) {
         return categoryRepository.findById(cateogryId)
                 .map(category -> {
@@ -51,6 +56,7 @@ public class CategoryController {
 
     @CrossOrigin
     @DeleteMapping("/{cateogryId}")
+    @RolesAllowed({"admin","superadmin"})
     public ResponseEntity<?> deleteCategory(@PathVariable Long categoryId) {
         return categoryRepository.findById(categoryId)
                 .map(category -> {
