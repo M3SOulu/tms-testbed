@@ -46,7 +46,7 @@ public class LanguageController {
 
     @CrossOrigin
     @DeleteMapping("/{languageId}")
-    public ResponseEntity<?> deleteQuestion(@PathVariable Long languageId) {
+    public ResponseEntity<?> deleteLanguage(@PathVariable Long languageId) {
         return languageRepository.findById(languageId)
                 .map(language -> {
                     languageRepository.delete(language);

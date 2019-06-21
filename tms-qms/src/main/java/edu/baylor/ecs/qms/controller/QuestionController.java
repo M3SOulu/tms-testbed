@@ -98,6 +98,16 @@ public class QuestionController {
     }
 
     @CrossOrigin
+    @DeleteMapping("/{questionId}")
+    public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId) {
+        return questionRepository.findById(questionId)
+                .map(question -> {
+                    questionRepository.delete(question);
+                    return ResponseEntity.ok().build();
+                }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
+    }
+
+    @CrossOrigin
     @PutMapping("/{questionId}")
     public Question updateQuestion(@PathVariable Long questionId, @Valid @RequestBody Map<String, Object> payload) {
         try {
@@ -281,16 +291,6 @@ public class QuestionController {
                 c.setCorrect(Boolean.parseBoolean(choice.get("correct").toString()));
             }
         }
-    }
-
-    @CrossOrigin
-    @DeleteMapping("/{questionId}")
-    public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId) {
-        return questionRepository.findById(questionId)
-                .map(question -> {
-                    questionRepository.delete(question);
-                    return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
     }
 
 

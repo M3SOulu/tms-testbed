@@ -51,11 +51,11 @@ public class CategoryController {
 
     @CrossOrigin
     @DeleteMapping("/{cateogryId}")
-    public ResponseEntity<?> deleteCateogry(@PathVariable Long cateogryId) {
-        return categoryRepository.findById(cateogryId)
+    public ResponseEntity<?> deleteCategory(@PathVariable Long categoryId) {
+        return categoryRepository.findById(categoryId)
                 .map(category -> {
                     category.getQuestions().clear();
-                    List<Question> questions = questionRepository.findByCategoryId(cateogryId);
+                    List<Question> questions = questionRepository.findByCategoryId(categoryId);
                     for (Question question:questions) {
                         question.getCategories().remove(category);
                         questionRepository.save(question);
@@ -63,7 +63,7 @@ public class CategoryController {
                     categoryRepository.save(category);
                     categoryRepository.delete(category);
                     return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException("Category not found with id " + cateogryId));
+                }).orElseThrow(() -> new ResourceNotFoundException("Category not found with id " + categoryId));
     }
 
 

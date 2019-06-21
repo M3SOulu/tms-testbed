@@ -62,6 +62,9 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         return oAuth2RestTemplate;
     }
 
+    /*
+    Role user is able to access the base request mapping of UserManagementApplication
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
