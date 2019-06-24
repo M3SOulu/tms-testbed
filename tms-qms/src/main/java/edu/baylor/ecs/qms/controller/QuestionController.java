@@ -32,18 +32,21 @@ public class QuestionController {
     private LanguageRepository languageRepository;
 
     @CrossOrigin
+    @RolesAllowed({"superadmin", "admin"})
     @GetMapping("/all")
     public List<Question> findAllQuestions() {
         return questionRepository.findAll();
     }
 
     @CrossOrigin
+    @RolesAllowed({"superadmin", "admin"})
     @GetMapping("/{questionId}")
     public Question findQuestionById(@PathVariable Long questionId) {
         return questionRepository.findById(questionId).orElse(null);
     }
 
     @CrossOrigin
+    @RolesAllowed({"superadmin", "admin"})
     @GetMapping("")
     public List<QuestionDto> findQuestionByCateogryIdAndName(@RequestParam Map<String, Object> customQuery) {
 
@@ -68,6 +71,7 @@ public class QuestionController {
 
     @CrossOrigin
     @PostMapping("")
+    @RolesAllowed("superadmin")
     public Question createQuestion(@Valid @RequestBody Map<String, Object> payload) {
         try {
             Question question = new Question();
@@ -111,6 +115,7 @@ public class QuestionController {
     }
 
     @CrossOrigin
+    @RolesAllowed({"superadmin", "admin"})
     @PutMapping("/{questionId}")
     public Question updateQuestion(@PathVariable Long questionId, @Valid @RequestBody Map<String, Object> payload) {
         try {
