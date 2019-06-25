@@ -71,7 +71,7 @@ public class QuestionController {
 
     @CrossOrigin
     @PostMapping("")
-    @RolesAllowed("superadmin")
+    @RolesAllowed({"superadmin", "admin"})
     public Question createQuestion(@Valid @RequestBody Map<String, Object> payload) {
         try {
             Question question = new Question();
@@ -105,7 +105,7 @@ public class QuestionController {
 
     @CrossOrigin
     @DeleteMapping("/{questionId}")
-    @RolesAllowed("superadmin")
+    @RolesAllowed({"admin", "superadmin"})
     public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId) {
         return questionRepository.findById(questionId)
                 .map(question -> {

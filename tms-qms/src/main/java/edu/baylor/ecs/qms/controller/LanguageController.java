@@ -51,7 +51,7 @@ public class LanguageController {
 
     @CrossOrigin
     @DeleteMapping("/{languageId}")
-    @RolesAllowed({"superadmin"})
+    @RolesAllowed({"admin", "superadmin"})
     public ResponseEntity<?> deleteLanguage(@PathVariable Long languageId) {
         return languageRepository.findById(languageId)
                 .map(language -> {

@@ -30,7 +30,7 @@ public class CategoryController {
 
     @CrossOrigin
     @GetMapping("/{cateogryId}")
-    @RolesAllowed({"moderator","admin","superadmin"})
+    @RolesAllowed({"user","admin","superadmin"})
     public Category findCategoriesById(@PathVariable Long cateogryId) {
         return categoryRepository.findById(cateogryId).orElse(null);
     }
@@ -44,7 +44,7 @@ public class CategoryController {
 
     @CrossOrigin
     @PutMapping("/{cateogryId}")
-    @RolesAllowed({"moderator","admin","superadmin"})
+    @RolesAllowed({"admin","superadmin"})
     public Category updateCategory(@PathVariable Long cateogryId, @Valid @RequestBody Category categoryRequest) {
         return categoryRepository.findById(cateogryId)
                 .map(category -> {
