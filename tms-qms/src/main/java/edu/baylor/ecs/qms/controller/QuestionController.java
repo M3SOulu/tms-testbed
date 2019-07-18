@@ -46,7 +46,7 @@ public class QuestionController {
     }
 
     @CrossOrigin
-    @RolesAllowed({"superadmin", "admin"})
+    @RolesAllowed({"uzer", "admin"})
     @GetMapping("")
     public List<QuestionDto> findQuestionByCateogryIdAndName(@RequestParam Map<String, Object> customQuery) {
 

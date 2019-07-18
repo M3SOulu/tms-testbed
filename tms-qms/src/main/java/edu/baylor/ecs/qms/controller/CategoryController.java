@@ -21,6 +21,9 @@ public class CategoryController {
     @Autowired
     private QuestionRepository questionRepository;
 
+    /*
+     * UNRELATED ACCESS VIOLATION MUTANT
+     */
     @CrossOrigin
     @GetMapping("")
     @RolesAllowed({"moderator","admin","superadmin"})
@@ -35,13 +38,19 @@ public class CategoryController {
         return categoryRepository.findById(cateogryId).orElse(null);
     }
 
+    /*
+     * HIERARCHY ACCESS VIOLATION MUTANT
+     */
     @CrossOrigin
     @PostMapping("")
-    @RolesAllowed({"admin","superadmin"})
+    @RolesAllowed({"user","admin","superadmin"})
     public Category createCategory(@Valid @RequestBody Category category) {
         return categoryRepository.save(category);
     }
 
+    /*
+     * ENTITY ACCESS VIOLATION MUTANT
+     */
     @CrossOrigin
     @PutMapping("/{categoryId}")
     @RolesAllowed({"admin","superadmin"})
@@ -54,6 +63,9 @@ public class CategoryController {
                 }).orElseThrow(() -> new ResourceNotFoundException("Category not found with id " + categoryId));
     }
 
+    /*
+     * ENTITY ACCESS VIOLATION MUTANT
+     */
     @CrossOrigin
     @PutMapping("/{categoryId}")
     @RolesAllowed({"user", "admin","superadmin"})
@@ -65,6 +77,9 @@ public class CategoryController {
                 }).orElseThrow(() -> new ResourceNotFoundException("Category not found with id " + categoryId));
     }
 
+    /*
+     * HIERARCHY ACCESS VIOLATION MUTANT
+     */
     @CrossOrigin
     @DeleteMapping("/{cateogryId}")
     @RolesAllowed({"admin","superadmin"})
@@ -82,6 +97,4 @@ public class CategoryController {
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new ResourceNotFoundException("Category not found with id " + categoryId));
     }
-
-
 }

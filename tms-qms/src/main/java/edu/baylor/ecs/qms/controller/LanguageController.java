@@ -49,9 +49,11 @@ public class LanguageController {
                 }).orElseThrow(() -> new ResourceNotFoundException("Language not found with id " + languageId));
     }
 
+    /*
+     * MISSING SECURITY VIOLATION MUTANT
+     */
     @CrossOrigin
     @DeleteMapping("/{languageId}")
-    @RolesAllowed({"admin", "superadmin"})
     public ResponseEntity<?> deleteLanguage(@PathVariable Long languageId) {
         return languageRepository.findById(languageId)
                 .map(language -> {

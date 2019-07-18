@@ -16,6 +16,9 @@ public class CategoryInfoController {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    /*
+     * UNRELATED ACCESS VIOLATION MUTANT
+     */
     @CrossOrigin
     @GetMapping("")
     @RolesAllowed("user")
