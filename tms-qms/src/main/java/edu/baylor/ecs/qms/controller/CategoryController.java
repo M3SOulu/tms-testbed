@@ -43,15 +43,26 @@ public class CategoryController {
     }
 
     @CrossOrigin
-    @PutMapping("/{cateogryId}")
+    @PutMapping("/{categoryId}")
     @RolesAllowed({"admin","superadmin"})
-    public Category updateCategory(@PathVariable Long cateogryId, @Valid @RequestBody Category categoryRequest) {
-        return categoryRepository.findById(cateogryId)
+    public Category updateCategory(@PathVariable Long categoryId, @Valid @RequestBody Category categoryRequest) {
+        return categoryRepository.findById(categoryId)
                 .map(category -> {
                     category.setName(categoryRequest.getName());
                     category.setDescription(categoryRequest.getDescription());
                     return categoryRepository.save(category);
-                }).orElseThrow(() -> new ResourceNotFoundException("Category not found with id " + cateogryId));
+                }).orElseThrow(() -> new ResourceNotFoundException("Category not found with id " + categoryId));
+    }
+
+    @CrossOrigin
+    @PutMapping("/{categoryId}")
+    @RolesAllowed({"user", "admin","superadmin"})
+    public Category updateCategoryName(@PathVariable Long categoryId, @Valid @RequestBody Category categoryRequest) {
+        return categoryRepository.findById(categoryId)
+                .map(category -> {
+                    category.setName(categoryRequest.getName());
+                    return categoryRepository.save(category);
+                }).orElseThrow(() -> new ResourceNotFoundException("Category not found with id " + categoryId));
     }
 
     @CrossOrigin
