@@ -5,6 +5,7 @@ import edu.baylor.ecs.cms.service.QmsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.annotation.security.RolesAllowed;
 
 @RestController
 @RequestMapping("/configuration")
@@ -15,6 +16,7 @@ public class ConfigurationController {
 
     @CrossOrigin
     @PostMapping("")
+    @RolesAllowed("user")
     public Object createConfiguration(@RequestBody ConfigurationDto object) {
         ResponseEntity<Object> tmp = qmsService.createConfiguration(object);
         return tmp.getBody();
@@ -22,6 +24,7 @@ public class ConfigurationController {
 
     @CrossOrigin
     @GetMapping("")
+    @RolesAllowed("user")
     public Object[] getConfigurations() {
         return qmsService.getConfigurations().getBody();
     }
