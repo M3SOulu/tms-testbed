@@ -32,7 +32,7 @@ public class QmsService {
 
     public List<Object> getCategoryInfoDtos(){
         String categoryInfoPath = qmsIp + categoryInfoContext;
-        ResponseEntity<Object[]> tmp = restTemplate.getForEntity(categoryInfoPath, Object[].class);
+        ResponseEntity<Object[]> tmp = this.restTemplate.getForEntity(categoryInfoPath, Object[].class);
         List<CategoryInfoDto> categoryInfoDtos = new ArrayList<>();
 //        for(CategoryInfoDto c:tmp.getBody()) {
 //            categoryInfoDtos.add(c);
@@ -44,11 +44,11 @@ public class QmsService {
     }
 
     public ResponseEntity<Object> createConfiguration(Object object) {
-        Object obj = restTemplate.postForObject(qmsIp + configurationContext, object, Object.class);
+        Object obj = this.restTemplate.postForObject(qmsIp + configurationContext, object, Object.class);
         return ResponseEntity.ok(obj);
     }
 
     public ResponseEntity<Object[]> getConfigurations() {
-        return restTemplate.getForEntity(qmsIp + configurationContext, Object[].class);
+        return this.restTemplate.getForEntity(qmsIp + configurationContext, Object[].class);
     }
 }
