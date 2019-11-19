@@ -56,7 +56,7 @@ public class UmsService {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", auth);
         HttpEntity<String> request = new HttpEntity<String>(headers);
-        ResponseEntity<String> re = restTemplate.exchange(umsIp + this.email + email, HttpMethod.GET, request, String.class);
+        ResponseEntity<String> re = this.restTemplate.exchange(umsIp + this.email + email, HttpMethod.GET, request, String.class);
         EmailDto emailDto = new EmailDto();
         emailDto.setEmail(re.getBody());
         return emailDto;
@@ -70,7 +70,7 @@ public class UmsService {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", auth);
         HttpEntity<String> request = new HttpEntity<String>(headers);
-        ResponseEntity<Object[]> re = restTemplate.exchange(umsIp + "userinfo/users", HttpMethod.GET, request, Object[].class);
+        ResponseEntity<Object[]> re = this.restTemplate.exchange(umsIp + "userinfo/users", HttpMethod.GET, request, Object[].class);
         return Arrays.asList(re.getBody());
     }
 
@@ -88,7 +88,7 @@ public class UmsService {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", auth);
         HttpEntity<String> request = new HttpEntity<>(headers);
-        ResponseEntity<String> resp = restTemplate.exchange(umsIp + "userinfo/userIdByUsername/" + username, HttpMethod.GET, request, String.class);
+        ResponseEntity<String> resp = this.restTemplate.exchange(umsIp + "userinfo/userIdByUsername/" + username, HttpMethod.GET, request, String.class);
         return resp.getBody();
     }
 
@@ -96,7 +96,7 @@ public class UmsService {
         HttpHeaders headers = new HttpHeaders();
         headers.add("Authorization", auth);
         HttpEntity<User> request = new HttpEntity<>(headers);
-        ResponseEntity<User> resp = restTemplate.exchange(umsIp + "userinfo/userById/" + id, HttpMethod.GET, request, User.class);
+        ResponseEntity<User> resp = this.restTemplate.exchange(umsIp + "userinfo/userById/" + id, HttpMethod.GET, request, User.class);
         return resp.getBody();
     }
 
