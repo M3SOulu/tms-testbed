@@ -8,6 +8,7 @@ import edu.baylor.ecs.qms.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,7 @@ public class TestController {
 
     @CrossOrigin
     @GetMapping("")
+    @RolesAllowed("superadmin")
     public List<QuestionSingleCodeDto> createTest(@RequestParam("configId") Long configId) {
         List<QuestionSingleCodeDto> questions = new ArrayList<>();
         List<ConfigurationGroup> configurationGroups = configurationRepository.getAllGroupsById(configId);

@@ -6,6 +6,7 @@ import edu.baylor.ecs.ems.service.ChoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import javax.annotation.security.RolesAllowed;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class ChoiceController {
 
     @CrossOrigin
     @RequestMapping(value = "", method = RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    @RolesAllowed("user")
     public List<Choice> updateChoices(@RequestBody SelectedChoiceEmsDto selectedChoiceEmsDto) {
         return choiceService.selectChoices(selectedChoiceEmsDto);
     }

@@ -21,19 +21,16 @@ spring:
   main:
     allow-bean-definition-overriding: true
 
-qms:
-  ip: 'http://qms-backend.myicpc.live/'
-  categoryinfo: 'categoryinfo'
-  configuration: 'configuration'
+qms.ip: 'http://localhost:12345/'
+qms.categoryinfo: 'categoryinfo'
+qms.configuration: 'configuration'
 
-ems:
-  ip: 'http://ems-backend.myicpc.live/'
-  exam: 'exam'
+ems.ip: 'http://localhost:10002/'
+ems.exam: 'exam'
 
-ums:
-  ip: 'http://ums-backend.myicpc.live/'
-  id: 'email'
-  email: 'userinfo/emailInUse/'
+ums.ip: 'http://localhost:9004/'
+ums.id: 'email'
+ums.email: 'userinfo/emailInUse/'
 
 
 keycloak:

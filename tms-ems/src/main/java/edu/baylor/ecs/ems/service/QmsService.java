@@ -27,7 +27,7 @@ public class QmsService {
         //ToDo: call QMS
         // http://129.62.148.179:12345/test?configId=1
 //        ResponseEntity<Object[]> objects = restTemplate.getForEntity("http://129.62.148.179:12345/test?configId="+configurationId, Object[].class);
-        ResponseEntity<List<QuestionQmsDto>> qqd = restTemplate.exchange("http://129.62.148.179:12345/test?configId="+configurationId, HttpMethod.GET, null, new ParameterizedTypeReference<List<QuestionQmsDto>>() {
+        ResponseEntity<List<QuestionQmsDto>> qqd = this.restTemplate.exchange("http://129.62.148.179:12345/test?configId="+configurationId, HttpMethod.GET, null, new ParameterizedTypeReference<List<QuestionQmsDto>>() {
         });
 //        List<QuestionQmsDto> qqd = new ArrayList<>();
 //        Arrays.stream(objects.getBody()).forEach(o -> {

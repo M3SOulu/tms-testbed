@@ -29,10 +29,8 @@ public class ChoiceService {
         // Find choices by question id
         List<Choice> choices = this.choiceRepository.findByQuestionId(selectedChoiceEmsDto.getQuestionId());
         //Select choices and unselect choices
-        for (Choice ch: choices
-        ) {
-            for (ChoiceEmsDto chEms: selectedChoiceEmsDto.getChoiceEmsDtos()
-                 ) {
+        for (Choice ch: choices) {
+            for (ChoiceEmsDto chEms: selectedChoiceEmsDto.getChoiceEmsDtos()) {
                 if (ch.getId().equals(chEms.getId())){
                     ch.setChosen(chEms.isChosen());
                 }
@@ -45,11 +43,9 @@ public class ChoiceService {
 
         Integer correct = 0;
 
-        for (Question q: questions
-             ) {
+        for (Question q: questions) {
             boolean isQuestionCorrect = true;
-            for (Choice ch: q.getChoices()
-                 ) {
+            for (Choice ch: q.getChoices()) {
                 if ( (ch.isCorrect() && !ch.isChosen()) || (!ch.isCorrect() && ch.isChosen()) ){
                     isQuestionCorrect = false;
                 }

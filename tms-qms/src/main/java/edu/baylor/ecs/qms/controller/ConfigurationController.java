@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,12 +27,14 @@ public class ConfigurationController {
 
     @CrossOrigin
     @GetMapping("")
+    @RolesAllowed({"moderator","admin","superadmin"})
     public List<Configuration> findAllConfigurations() {
         return configurationRepository.findAll();
     }
 
     @CrossOrigin
     @GetMapping("/{configurationId}")
+    @RolesAllowed({"moderator","admin","superadmin"})
     public Configuration findConfigurationsById(@PathVariable Long configurationId) {
         return configurationRepository.findById(configurationId).orElse(null);
     }
@@ -40,6 +43,7 @@ public class ConfigurationController {
 
     @CrossOrigin
     @DeleteMapping("/{configurationId}")
+    @RolesAllowed({"admin","superadmin"})
     public ResponseEntity<?> deleteConfiguration(@PathVariable Long configurationId) {
         return configurationRepository.findById(configurationId)
                 .map(configuration -> {
@@ -50,6 +54,7 @@ public class ConfigurationController {
 
     @CrossOrigin
     @PostMapping("")
+    @RolesAllowed({"admin","superadmin"})
     public Configuration createConfiguration(@Valid @RequestBody Map<String, Object> payload) {
         try {
             Configuration configuration = new Configuration();

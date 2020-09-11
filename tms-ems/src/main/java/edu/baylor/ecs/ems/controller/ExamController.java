@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.annotation.security.RolesAllowed;
 
 @RestController
 @RequestMapping("exam")
@@ -27,6 +28,7 @@ public class ExamController {
 
     @CrossOrigin
     @RequestMapping(value = "", method = RequestMethod.GET)
+    @RolesAllowed("user")
     public List<Exam> listAllExams() {
         List<Exam> exams = examService.findAllExams();
         if(exams.isEmpty()){

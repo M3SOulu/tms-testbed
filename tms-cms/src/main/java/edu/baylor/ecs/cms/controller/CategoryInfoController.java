@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import javax.annotation.security.RolesAllowed;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class CategoryInfoController {
 
     @CrossOrigin
     @RequestMapping("")
+    @RolesAllowed("user")
     public List<Object> getCategoryInfo() {
         return qmsService.getCategoryInfoDtos();
     }

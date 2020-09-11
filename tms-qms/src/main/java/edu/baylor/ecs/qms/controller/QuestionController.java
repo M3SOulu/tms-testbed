@@ -11,12 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/question")
+@RolesAllowed({"admin","superadmin"})
 public class QuestionController {
     @Autowired
     private QuestionRepository questionRepository;
@@ -30,18 +32,21 @@ public class QuestionController {
     private LanguageRepository languageRepository;
 
     @CrossOrigin
+    @RolesAllowed({"superadmin", "admin"})
     @GetMapping("/all")
     public List<Question> findAllQuestions() {
         return questionRepository.findAll();
     }
 
     @CrossOrigin
+    @RolesAllowed({"superadmin", "admin"})
     @GetMapping("/{questionId}")
     public Question findQuestionById(@PathVariable Long questionId) {
         return questionRepository.findById(questionId).orElse(null);
     }
 
     @CrossOrigin
+    @RolesAllowed({"uzer", "admin"})
     @GetMapping("")
     public List<QuestionDto> findQuestionByCateogryIdAndName(@RequestParam Map<String, Object> customQuery) {
 
@@ -66,6 +71,7 @@ public class QuestionController {
 
     @CrossOrigin
     @PostMapping("")
+    @RolesAllowed({"superadmin", "admin"})
     public Question createQuestion(@Valid @RequestBody Map<String, Object> payload) {
         try {
             Question question = new Question();
@@ -98,6 +104,18 @@ public class QuestionController {
     }
 
     @CrossOrigin
+    @DeleteMapping("/{questionId}")
+    @RolesAllowed({"admin", "superadmin"})
+    public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId) {
+        return questionRepository.findById(questionId)
+                .map(question -> {
+                    questionRepository.delete(question);
+                    return ResponseEntity.ok().build();
+                }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
+    }
+
+    @CrossOrigin
+    @RolesAllowed({"superadmin", "admin"})
     @PutMapping("/{questionId}")
     public Question updateQuestion(@PathVariable Long questionId, @Valid @RequestBody Map<String, Object> payload) {
         try {
@@ -281,16 +299,6 @@ public class QuestionController {
                 c.setCorrect(Boolean.parseBoolean(choice.get("correct").toString()));
             }
         }
-    }
-
-    @CrossOrigin
-    @DeleteMapping("/{questionId}")
-    public ResponseEntity<?> deleteQuestion(@PathVariable Long questionId) {
-        return questionRepository.findById(questionId)
-                .map(question -> {
-                    questionRepository.delete(question);
-                    return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException("Question not found with id " + questionId));
     }
 
 
